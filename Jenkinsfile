@@ -16,14 +16,15 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'mvn clean package'
+                sh 'mvn clean compile'
             }
         }
-        stage('Test') { // Added stage for automation tests
+        stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') { // Ensure this matches your SonarQube configuration
