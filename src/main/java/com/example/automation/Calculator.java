@@ -1,5 +1,4 @@
-package com.example.calculator;
-
+package com.example.automation;
 public class Calculator {
 
     // Method to add two numbers
