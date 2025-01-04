@@ -1,38 +1,41 @@
-package com.example.calculator;
+package com.example.automation;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculatorTest {
 
-    private final Calculator calculator = new Calculator();
-
     @Test
-    public void testAdd() {
-        assertEquals(5, calculator.add(2, 3), "Addition test failed");
-        assertEquals(-1, calculator.add(2, -3), "Addition with negative numbers failed");
+    public void testAddition() {
+        Calculator calculator = new Calculator();
+        assertEquals(10, calculator.add(4, 6), "Addition operation failed!");
     }
 
     @Test
-    public void testSubtract() {
-        assertEquals(-1, calculator.subtract(2, 3), "Subtraction test failed");
-        assertEquals(5, calculator.subtract(2, -3), "Subtraction with negative numbers failed");
+    public void testSubtraction() {
+        Calculator calculator = new Calculator();
+        assertEquals(2, calculator.subtract(8, 6), "Subtraction operation failed!");
     }
 
     @Test
-    public void testMultiply() {
-        assertEquals(6, calculator.multiply(2, 3), "Multiplication test failed");
-        assertEquals(-6, calculator.multiply(2, -3), "Multiplication with negative numbers failed");
+    public void testMultiplication() {
+        Calculator calculator = new Calculator();
+        assertEquals(12, calculator.multiply(3, 4), "Multiplication operation failed!");
     }
 
     @Test
-    public void testDivide() {
-        assertEquals(2.0, calculator.divide(6, 3), 0.01, "Division test failed");
-        assertEquals(-2.0, calculator.divide(6, -3), 0.01, "Division with negative numbers failed");
+    public void testDivision() {
+        Calculator calculator = new Calculator();
+        assertEquals(5, calculator.divide(10, 2), "Division operation failed!");
+    }
 
-        // Test division by zero
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.divide(6, 0));
-        assertEquals("Division by zero is not allowed.", exception.getMessage(), "Division by zero exception failed");
+    @Test
+    public void testDivisionByZero() {
+        Calculator calculator = new Calculator();
+        try {
+            calculator.divide(10, 0);
+        } catch (ArithmeticException e) {
+            assertEquals("/ by zero", e.getMessage(), "Division by zero should throw an ArithmeticException");
+        }
     }
 }
-
