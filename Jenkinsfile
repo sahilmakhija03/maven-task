@@ -14,32 +14,26 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                sh 'mvn clean compile'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
+                bat 'mvn clean verify' // Run tests and generate JaCoCo reports
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') { // Ensure this matches your SonarQube configuration
                     bat """
-                        mvn clean verify sonar:sonar ^
-                        -Dsonar.projectKey=maven-demo ^
-                        -Dsonar.projectName='maven-demo' ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.token=%SONAR_TOKEN%
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=maven-task \
+                        -Dsonar.sources=src/main/java/com/example/automation \
+                        -Dsonar.tests=src/test/java/com/example/automation \
+                        -Dsonar.junit.reportPaths=target/surefire-reports \
+                        -Dsonar.jacoco.reportPaths=target/site/jacoco/jacoco.xml \
+                        -Dsonar.pmd.reportPaths=target/pmd-duplicates.xml \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=%SONAR_TOKEN%
                     """
                 }
-            }
-        }
-        stage('JaCoCo') {
-            steps {
-                archiveArtifacts artifacts: 'target/site/jacoco/index.html', allowEmptyArchive: true
             }
         }
     }
