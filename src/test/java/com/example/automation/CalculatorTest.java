@@ -32,10 +32,16 @@ public class CalculatorTest {
     @Test
     public void testDivisionByZero() {
         Calculator calculator = new Calculator();
+        Exception exception = null;
+    
         try {
             calculator.divide(10, 0);
-        } catch (ArithmeticException e) {
-            assertEquals("/ by zero", e.getMessage(), "Division by zero should throw an ArithmeticException");
+        } catch (IllegalArgumentException e) {
+            exception = e;
         }
+    
+        // Assert that the exception is not null and has the expected message
+        assertEquals("Division by zero is not allowed.", exception.getMessage(), "Unexpected exception message");
     }
+
 }
