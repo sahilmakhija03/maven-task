@@ -17,10 +17,11 @@ public class Calculator {
     }
 
     // Method to divide two numbers
-    public double divide(int a, int b) {
+   public int divide(int a, int b) {
         if (b == 0) {
             throw new IllegalArgumentException("Division by zero is not allowed.");
         }
-        return (double) a / b;
+        return a / b;
     }
+
 }
